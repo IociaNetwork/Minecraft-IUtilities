@@ -1,0 +1,4 @@
+name: IUtilities
+main: iocia.network.minecraft.plugins.iutilities.IUtilitiesMain
+version: 1.0.0-alpha
+author: Hunky524
