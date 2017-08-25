@@ -1,11 +1,15 @@
 package iocia.network.minecraft.plugins.iutilities.item;
 
+import com.sun.istack.internal.NotNull;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.bukkit.Material;
 
 public abstract class BaseItemData<T extends BaseItemData<T>> extends ItemBuilder<T> {
     /*---Constants---*/
+    private static final String MATERIAL_NULL = "Cannot set the material to null. ItemStack must always have a " +
+            "valid material";
     private static final String DAMAGE_NEGATIVE_EXCEPTION = "Damage value cannot be negative.";
-    private static final String DAMAGE_TOO_LARGE_EXCEPTION = "Damage value is too large. \n" +
+    private static final String DAMAGE_TOO_LARGE_EXCEPTION = "Damage value is too large. " +
             "Damage value must be within the range [0, " + Short.MAX_VALUE + "].";
 
     /*---Data---*/
@@ -20,7 +24,9 @@ public abstract class BaseItemData<T extends BaseItemData<T>> extends ItemBuilde
     
     /*---Methods---*/
 
-    public T setMaterial(Material material) {
+    public T setMaterial(@NotNull Material material) {
+        if (material == null)
+            throw new IllegalArgumentException(MATERIAL_NULL);
         this.material = material;
         return me();
     }
