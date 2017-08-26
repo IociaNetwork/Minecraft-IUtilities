@@ -1,4 +1,4 @@
-package iocia.network.minecraft.plugins.iutilities.item;
+package iocia.network.minecraft.plugins.iutilities.item.itembuilder;
 
 import org.bukkit.inventory.ItemStack;
 

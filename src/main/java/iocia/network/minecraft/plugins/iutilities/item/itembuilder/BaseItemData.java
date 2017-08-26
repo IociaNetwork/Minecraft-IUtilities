@@ -1,4 +1,4 @@
-package iocia.network.minecraft.plugins.iutilities.item;
+package iocia.network.minecraft.plugins.iutilities.item.itembuilder;
 
 import com.sun.istack.internal.NotNull;
 import org.bukkit.Material;
