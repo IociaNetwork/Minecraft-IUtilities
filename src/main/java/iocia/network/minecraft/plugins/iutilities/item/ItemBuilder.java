@@ -2,8 +2,15 @@ package iocia.network.minecraft.plugins.iutilities.item;
 
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Base abstraction of the {@link ItemStack} builders.
+ * @param <T> Builder class which is implementing this class.
+ */
 public abstract class ItemBuilder<T extends ItemBuilder<T>> {
     /*---Constructors---*/
+    /**
+     * Creates a new {@link ItemBuilder}.
+     */
     public ItemBuilder() {
 
     }
