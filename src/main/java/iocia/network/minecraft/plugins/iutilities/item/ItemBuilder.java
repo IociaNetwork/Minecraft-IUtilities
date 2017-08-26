@@ -4,7 +4,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * Base abstraction of the {@link ItemStack} builders.
- * @param <T> Builder class which is implementing this class.
+ * @param <T> Builder class which is extending this class.
  */
 public abstract class ItemBuilder<T extends ItemBuilder<T>> {
     /*---Constructors---*/
