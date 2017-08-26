@@ -2,7 +2,6 @@ package iocia.network.minecraft.plugins.iutilities.item.itembuilder;
 
 import com.sun.istack.internal.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -21,6 +20,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     protected String localizedName = null;
     protected Collection<String> lore = null;
     protected boolean clearLore = false;
+    protected boolean unbreakable = false;
     
     /*---Constructors---*/
     /**
@@ -58,8 +58,9 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
      * in which they are added.
      * @param lore Line of lore to add.
      * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown if the given lore is null.
      */
-    public T addLore(@NotNull String lore) {
+    public T addLore(@NotNull String lore) throws IllegalArgumentException {
         if (lore == null)
             throw new IllegalArgumentException(LORE_NULL_EXCEPTION);
         if (this.lore == null)
@@ -74,6 +75,9 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
      * @param lore {@linkplain Collection Collection} of lore to be added. Lore will be added to the item in
      *                                               the order it is within the collection (if the collection maintains a fixed order).
      * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown if the given lore {@link Collection} is null.
+     * @throws NullPointerException Thrown if any of the lore entries in the given {@link Collection} is null. It is possible for some
+     * of the lore to be added before the exception is thrown.
      */
     public T addLore(@NotNull Collection<String> lore) {
         if (lore == null)
@@ -94,6 +98,9 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
      * a new line of lore on the item.
      * @param lore Array of {@linkplain String Strings} to add.
      * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown if the given array is null.
+     * @throws NullPointerException Thrown if any of the lore entries in the given array is null. It is possible for some
+     * of the lore to be added before the exception is thrown.
      */
     public T addLore(@NotNull String... lore) {
         return addLore(Arrays.asList(lore));
@@ -108,6 +115,15 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
      */
     public T clearLore() {
         this.clearLore = true;
+        return me();
+    }
+
+    /**
+     * Declares that the item will be unbreakable once built.
+     * @return ItemBuilder to continue chaining build methods.
+     */
+    public T unbreakable() {
+        this.unbreakable = true;
         return me();
     }
 }
