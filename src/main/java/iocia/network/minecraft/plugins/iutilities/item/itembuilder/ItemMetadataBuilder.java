@@ -79,7 +79,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
      * @throws NullPointerException Thrown if any of the lore entries in the given {@link Collection} is null. It is possible for some
      * of the lore to be added before the exception is thrown.
      */
-    public T addLore(@NotNull Collection<String> lore) {
+    public T addLore(@NotNull Collection<String> lore) throws IllegalArgumentException, NullPointerException {
         if (lore == null)
             throw new IllegalArgumentException(LORE_NULL_EXCEPTION);
         if (this.lore == null)
@@ -102,7 +102,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
      * @throws NullPointerException Thrown if any of the lore entries in the given array is null. It is possible for some
      * of the lore to be added before the exception is thrown.
      */
-    public T addLore(@NotNull String... lore) {
+    public T addLore(@NotNull String... lore) throws IllegalArgumentException, NullPointerException {
         return addLore(Arrays.asList(lore));
     }
 
