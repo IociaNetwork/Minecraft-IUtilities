@@ -11,8 +11,8 @@ import org.bukkit.Material;
  */
 public abstract class BaseItemData<T extends BaseItemData<T>> extends ItemBuilder<T> {
     /*---Constants---*/
-    private static final String MATERIAL_NULL_EXCEPTION = "Cannot set the material to null. ItemStack must always have a valid material";
-    private static final String AMOUNT_NEGATIVE_EXCEPTION = "Amount cannot be negative";
+    private static final String MATERIAL_NULL_EXCEPTION = "Cannot set the material to null. ItemStack must always have a valid material.";
+    private static final String AMOUNT_LESS_ONE = "Amount cannot be less than one.";
     private static final String DAMAGE_NEGATIVE_EXCEPTION = "Damage value cannot be negative.";
     private static final String DAMAGE_TOO_LARGE_EXCEPTION = "Damage value is too large. Damage value must be within the range [0, " + Short.MAX_VALUE + "].";
 
@@ -34,6 +34,7 @@ public abstract class BaseItemData<T extends BaseItemData<T>> extends ItemBuilde
      * Sets the {@link Material} for the {@link org.bukkit.inventory.ItemStack}.
      * @param material {@link Material} to set.
      * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when material is null.
      */
     public T setMaterial(@NotNull Material material) throws IllegalArgumentException {
         if (material == null)
@@ -46,10 +47,11 @@ public abstract class BaseItemData<T extends BaseItemData<T>> extends ItemBuilde
      * Sets the quantity of items in the {@link org.bukkit.inventory.ItemStack}.
      * @param amount Number of items in the stack. Cannot be negative.
      * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when amount is less than one.
      */
     public T setAmount(int amount) throws IllegalArgumentException {
-        if (amount < 0)
-            throw new IllegalArgumentException(AMOUNT_NEGATIVE_EXCEPTION);
+        if (amount < 1)
+            throw new IllegalArgumentException(AMOUNT_LESS_ONE);
         this.amount = amount;
         return me();
     }
@@ -61,6 +63,7 @@ public abstract class BaseItemData<T extends BaseItemData<T>> extends ItemBuilde
      * with a damage value of 14 is red wool, but will be orange with a damage value of 1.
      * @param damage Damage value to set. Cannot be negative.
      * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when damage is negative.
      */
     public T setDamage(short damage) throws IllegalArgumentException {
         if (damage < 0)
@@ -74,6 +77,7 @@ public abstract class BaseItemData<T extends BaseItemData<T>> extends ItemBuilde
      * to convert the int parameter to a short beforehand for the lazy.
      * @param damage Damage value to set. Cannot be negative. Must be castable to a short.
      * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when damage cannot be cleanly casted to a short.
      */
     public T setDamage(int damage) throws IllegalArgumentException {
         if (damage > Short.MAX_VALUE)
