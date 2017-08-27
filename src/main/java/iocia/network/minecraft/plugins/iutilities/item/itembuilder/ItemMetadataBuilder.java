@@ -1,10 +1,9 @@
 package iocia.network.minecraft.plugins.iutilities.item.itembuilder;
 
 import com.sun.istack.internal.NotNull;
+import org.bukkit.inventory.ItemFlag;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.LinkedList;
+import java.util.*;
 
 /**
  * Responsible for controlling all the metadata which can go on all {@linkplain javafx.scene.paint.Material materials}.
@@ -14,6 +13,8 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     /*---Constants---*/
     private static final String LORE_NULL_EXCEPTION = "Lore cannot be null. Cannot add lore that is null.";
     private static final String LORE_INNER_NULL_EXCEPTION = "One of the lore entries given was null. A null lore string cannot be added.";
+    private static final String ITEM_FLAG_NULL_EXCEPTION = "ItemFlag cannot be null. Cannot add an ItemFlag that is null.";
+    private static final String ITEM_FLAG_INNER_NULL_EXCEPTION = "At least one of the item flags given was null. A null item flag cannot be added.";
 
     /*---Data---*/
     protected String displayName = null;
@@ -21,6 +22,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     protected Collection<String> lore = null;
     protected boolean clearLore = false;
     protected boolean unbreakable = false;
+    protected Set<ItemFlag> itemFlags = null;
     
     /*---Constructors---*/
     /**
@@ -125,5 +127,51 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     public T unbreakable() {
         this.unbreakable = true;
         return me();
+    }
+
+    /**
+     * Adds an {@link ItemFlag} to the item being created.
+     * @param flag {@link ItemFlag} to add.
+     * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when the given flag is null.
+     */
+    public T addItemFlag(ItemFlag flag) throws IllegalArgumentException {
+        if (flag == null)
+            throw new IllegalArgumentException(ITEM_FLAG_NULL_EXCEPTION);
+        if (this.itemFlags == null)
+            this.itemFlags = new HashSet<>();
+        this.itemFlags.add(flag);
+        return me();
+    }
+
+    /**
+     * Adds an entire {@linkplain Set set} of {@linkplain ItemFlag ItemFlags} to the item being built.
+     * @param flags {@linkplain ItemFlag ItemFlags} to add.
+     * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when flags {@linkplain Set set} is null.
+     * @throws NullPointerException Thrown when any of the elements in the given {@linkplain Set set} is null.
+     */
+    public T addItemFlags(Set<ItemFlag> flags) throws IllegalArgumentException, NullPointerException {
+        if (flags == null)
+            throw new IllegalArgumentException(ITEM_FLAG_NULL_EXCEPTION);
+        if (this.itemFlags == null)
+            this.itemFlags = new HashSet<>();
+        flags.forEach(f -> {
+            if (f == null)
+                throw new NullPointerException(ITEM_FLAG_INNER_NULL_EXCEPTION);
+            this.itemFlags.add(f);
+        });
+        return me();
+    }
+
+    /**
+     * Adds an array of {@link ItemFlag item flags} to the item being built.
+     * @param flags Array of {@linkplain ItemFlag item flags} to add.
+     * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when the given array is null.
+     * @throws NullPointerException Thrown if any element in the given is null.
+     */
+    public T addItemFlags(ItemFlag... flags) throws IllegalArgumentException, NullPointerException {
+        return addItemFlags(new HashSet<>(Arrays.asList(flags)));
     }
 }
