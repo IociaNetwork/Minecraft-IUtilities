@@ -1,6 +1,7 @@
 package iocia.network.minecraft.plugins.iutilities.item.itembuilder;
 
 import com.sun.istack.internal.NotNull;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
@@ -15,6 +16,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     private static final String LORE_INNER_NULL_EXCEPTION = "One of the lore entries given was null. A null lore string cannot be added.";
     private static final String ITEM_FLAG_NULL_EXCEPTION = "ItemFlag cannot be null. Cannot add an ItemFlag that is null.";
     private static final String ITEM_FLAG_INNER_NULL_EXCEPTION = "At least one of the item flags given was null. A null item flag cannot be added.";
+    private static final String ENCHANTMENT_NULL_EXCEPTION = "Enchantment cannot be null. Cannot add an enchantment that is null.";
 
     /*---Data---*/
     protected String displayName = null;
@@ -23,6 +25,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     protected boolean clearLore = false;
     protected boolean unbreakable = false;
     protected Set<ItemFlag> itemFlags = null;
+    protected Map<Enchantment, EnchantmentData> enchantments = null;
     
     /*---Constructors---*/
     /**
@@ -135,7 +138,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
      * @return ItemBuilder to continue chaining build methods.
      * @throws IllegalArgumentException Thrown when the given flag is null.
      */
-    public T addItemFlag(ItemFlag flag) throws IllegalArgumentException {
+    public T addItemFlag(@NotNull ItemFlag flag) throws IllegalArgumentException {
         if (flag == null)
             throw new IllegalArgumentException(ITEM_FLAG_NULL_EXCEPTION);
         if (this.itemFlags == null)
@@ -151,7 +154,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
      * @throws IllegalArgumentException Thrown when flags {@linkplain Set set} is null.
      * @throws NullPointerException Thrown when any of the elements in the given {@linkplain Set set} is null.
      */
-    public T addItemFlags(Set<ItemFlag> flags) throws IllegalArgumentException, NullPointerException {
+    public T addItemFlags(@NotNull Set<ItemFlag> flags) throws IllegalArgumentException, NullPointerException {
         if (flags == null)
             throw new IllegalArgumentException(ITEM_FLAG_NULL_EXCEPTION);
         if (this.itemFlags == null)
@@ -171,10 +174,28 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
      * @throws IllegalArgumentException Thrown when the given array is null.
      * @throws NullPointerException Thrown if any element in the given is null.
      */
-    public T addItemFlags(ItemFlag... flags) throws IllegalArgumentException, NullPointerException {
+    public T addItemFlags(@NotNull ItemFlag... flags) throws IllegalArgumentException, NullPointerException {
         return addItemFlags(new HashSet<>(Arrays.asList(flags)));
     }
 
+    /**
+     * Adds an {@link Enchantment} to the item being built. If multiple enchantments of the same
+     * type are added, the most recent enchantment will be the one added to the item.
+     * @param enchantment {@link Enchantment} to add.
+     * @param level Level of the {@linkplain Enchantment enchantment}.
+     * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when the given {@link Enchantment} is null.
+     */
+    public T addSafeEnchantment(@NotNull Enchantment enchantment, int level) throws IllegalArgumentException {
+        if (enchantment == null)
+            throw new IllegalArgumentException(ENCHANTMENT_NULL_EXCEPTION);
+        if (this.enchantments == null)
+            this.enchantments = new HashMap<>();
+        this.enchantments.put(enchantment, new EnchantmentData(level, true));
+        return me();
+    }
+
+    /*---Internal Classes---*/
     /**
      * Used as a wrapper for the enchantment data.
      */
