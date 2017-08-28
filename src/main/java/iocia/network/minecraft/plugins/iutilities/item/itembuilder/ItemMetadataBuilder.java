@@ -174,4 +174,45 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     public T addItemFlags(ItemFlag... flags) throws IllegalArgumentException, NullPointerException {
         return addItemFlags(new HashSet<>(Arrays.asList(flags)));
     }
+
+    /**
+     * Used as a wrapper for the enchantment data.
+     */
+    private class EnchantmentData {
+        /*---Constants---*/
+        private static final String LEVEL_LESS_THAN_ONE = "Level cannot be less than one.";
+
+        /*---Data---*/
+        private int level;
+        private boolean levelSafe;
+
+        /*---Constructors---*/
+        /**
+         * Creates a new EnchantmentData object.
+         * @param level Level of the enchantment.
+         * @param levelSafe Whether to apply the level safely or not.
+         */
+        EnchantmentData(int level, boolean levelSafe) {
+            if (level < 1)
+                throw new IllegalArgumentException(LEVEL_LESS_THAN_ONE);
+            this.level = level;
+            this.levelSafe = levelSafe;
+        }
+
+        /**
+         * Gets the level.
+         * @return Level of the enchantment.
+         */
+        public int getLevel() {
+            return level;
+        }
+
+        /**
+         * Returns whether or not the enchantment is level safe.
+         * @return True if level safe; false if not.
+         */
+        public boolean isLevelSafe() {
+            return levelSafe;
+        }
+    }
 }
