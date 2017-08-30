@@ -195,6 +195,23 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
         return me();
     }
 
+    /**
+     * Adds an {@link Enchantment} to the item being built. If multiple enchantments of the same
+     * type are added, the most recent enchantment will be the one added to the item.
+     * @param enchantment {@link Enchantment} to add.
+     * @param level Level of the {@linkplain Enchantment enchantment}.
+     * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when the given {@link Enchantment} is null.
+     */
+    public T addUnsafeEnchantment(@NotNull Enchantment enchantment, int level) throws IllegalArgumentException {
+        if (enchantment == null)
+            throw new IllegalArgumentException(ENCHANTMENT_NULL_EXCEPTION);
+        if (this.enchantments == null)
+            this.enchantments = new HashMap<>();
+        this.enchantments.put(enchantment, new EnchantmentData(level, false));
+        return me();
+    }
+
     /*---Internal Classes---*/
     /**
      * Used as a wrapper for the enchantment data.
