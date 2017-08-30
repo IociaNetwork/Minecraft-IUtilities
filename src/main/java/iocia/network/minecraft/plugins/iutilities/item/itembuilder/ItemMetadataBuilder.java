@@ -17,6 +17,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     private static final String ITEM_FLAG_NULL_EXCEPTION = "ItemFlag cannot be null. Cannot add an ItemFlag that is null.";
     private static final String ITEM_FLAG_INNER_NULL_EXCEPTION = "At least one of the item flags given was null. A null item flag cannot be added.";
     private static final String ENCHANTMENT_NULL_EXCEPTION = "Enchantment cannot be null. Cannot add an enchantment that is null.";
+    private static final String ENCHANTMENT_INNER_NULL_EXCEPTION = "At least one of the enchantment map entries given was null. A null enchantment cannot be added.";
 
     /*---Data---*/
     protected String displayName = null;
@@ -209,6 +210,46 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
         if (this.enchantments == null)
             this.enchantments = new HashMap<>();
         this.enchantments.put(enchantment, new EnchantmentData(level, false));
+        return me();
+    }
+
+    /**
+     * Adds a {@link Map} of enchantments to the item being built.
+     * @param enchantments Enchantments to add.
+     * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when the given enchantment {@link Map} is null.
+     * @throws NullPointerException Thrown if any of the entries within the given {@link Map} are null.
+     */
+    public T addSafeEnchantments(@NotNull Map<Enchantment, Integer> enchantments) throws IllegalArgumentException, NullPointerException {
+        if (enchantments == null)
+            throw new IllegalArgumentException(ENCHANTMENT_NULL_EXCEPTION);
+        if (this.enchantments == null)
+            this.enchantments = new HashMap<>();
+        enchantments.forEach((k, v) -> {
+            if (k == null || v == null)
+                throw new NullPointerException(ENCHANTMENT_INNER_NULL_EXCEPTION);
+            this.enchantments.put(k, new EnchantmentData(v, true));
+        });
+        return me();
+    }
+
+    /**
+     * Adds a {@link Map} of enchantments to the item being built.
+     * @param enchantments Enchantments to add.
+     * @return ItemBuilder to continue chaining build methods.
+     * @throws IllegalArgumentException Thrown when the given enchantment {@link Map} is null.
+     * @throws NullPointerException Thrown if any of the entries within the given {@link Map} are null.
+     */
+    public T addUnsafeEnchantments(@NotNull Map<Enchantment, Integer> enchantments) throws IllegalArgumentException, NullPointerException {
+        if (enchantments == null)
+            throw new IllegalArgumentException(ENCHANTMENT_NULL_EXCEPTION);
+        if (this.enchantments == null)
+            this.enchantments = new HashMap<>();
+        enchantments.forEach((k, v) -> {
+            if (k == null || v == null)
+                throw new NullPointerException(ENCHANTMENT_INNER_NULL_EXCEPTION);
+            this.enchantments.put(k, new EnchantmentData(v, false));
+        });
         return me();
     }
 
