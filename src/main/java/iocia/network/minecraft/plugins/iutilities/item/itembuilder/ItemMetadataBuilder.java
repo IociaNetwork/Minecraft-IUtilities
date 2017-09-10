@@ -257,7 +257,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     /**
      * Used as a wrapper for the enchantment data.
      */
-    private class EnchantmentData {
+    protected class EnchantmentData {
         /*---Constants---*/
         private static final String LEVEL_LESS_THAN_ONE = "Level cannot be less than one.";
 
