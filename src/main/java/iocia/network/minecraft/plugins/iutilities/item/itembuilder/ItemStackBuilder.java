@@ -1,8 +1,12 @@
 package iocia.network.minecraft.plugins.iutilities.item.itembuilder;
 
-import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Responsible for building regular {@linkplain org.bukkit.inventory.ItemStack item stacks} from the
@@ -10,6 +14,10 @@ import org.bukkit.inventory.meta.ItemMeta;
  */
 public class ItemStackBuilder extends ItemMetadataBuilder<ItemStackBuilder> {
     /*---Constructors---*/
+    /**
+     * Creates a new ItemStackBuilder object. This object is responsible for making basic {@linkplain ItemStack item stacks}.
+     * If more advanced creation features are needed, such as creating player skulls, then a more specific build should be used.
+     */
     public ItemStackBuilder() {
 
     }
@@ -39,6 +47,23 @@ public class ItemStackBuilder extends ItemMetadataBuilder<ItemStackBuilder> {
             metadata.setDisplayName(displayName);
         if (localizedName != null)
             metadata.setLocalizedName(localizedName);
+        if (lore != null && !lore.isEmpty()) {
+            if (clearLore) {
+                metadata.setLore((List<String>) lore);
+            } else {
+                Collection<String> combinedLore = new ArrayList<>();
+                if (metadata.hasLore())
+                    combinedLore.addAll(metadata.getLore());
+                combinedLore.addAll(lore);
+                metadata.setLore((List<String>) combinedLore);
+            }
+        }
+        metadata.setUnbreakable(unbreakable);
+        if (itemFlags != null && !itemFlags.isEmpty())
+            metadata.addItemFlags(itemFlags.toArray(new ItemFlag[itemFlags.size()]));
+        if (enchantments != null && !enchantments.isEmpty()) {
+            enchantments.forEach((k, v) -> metadata.addEnchant(k, v.getLevel(), v.isLevelSafe()));
+        }
         return item;
     }
 }
