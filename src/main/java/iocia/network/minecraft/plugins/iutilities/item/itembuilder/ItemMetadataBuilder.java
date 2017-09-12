@@ -22,7 +22,7 @@ public abstract class ItemMetadataBuilder<T extends ItemMetadataBuilder<T>> exte
     /*---Data---*/
     protected String displayName = null;
     protected String localizedName = null;
-    protected Collection<String> lore = null;
+    protected List<String> lore = null;
     protected boolean clearLore = false;
     protected boolean unbreakable = false;
     protected Set<ItemFlag> itemFlags = null;
