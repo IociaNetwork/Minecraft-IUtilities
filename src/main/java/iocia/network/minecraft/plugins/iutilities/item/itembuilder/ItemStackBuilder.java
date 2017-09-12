@@ -6,6 +6,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -43,27 +44,38 @@ public class ItemStackBuilder extends ItemMetadataBuilder<ItemStackBuilder> {
     public ItemStack build() {
         ItemStack item = new ItemStack(material, amount, damage);
         final ItemMeta metadata = item.getItemMeta();
+        fillItemMeta(metadata);
+        item.setItemMeta(metadata);
+        return item;
+    }
+
+    /**
+     * Applies all the metadata values to the given {@link ItemMeta}.
+     * This method is void meaning the metadata is applied to the passed metadata rather
+     * than being applied to a new {@link ItemMeta} and returning it. The given metadata
+     * must be passed by reference to properly apply the metadata.
+     * @param metadata {@link ItemMeta} to apply the data to.
+     */
+    private void fillItemMeta(ItemMeta metadata) {
         if (displayName != null)
             metadata.setDisplayName(displayName);
         if (localizedName != null)
             metadata.setLocalizedName(localizedName);
         if (lore != null && !lore.isEmpty()) {
-            if (clearLore) {
-                metadata.setLore((List<String>) lore);
-            } else {
-                Collection<String> combinedLore = new ArrayList<>();
+            if (clearLore)
+                metadata.setLore(lore);
+            else {
+                List<String> combinedLore = new LinkedList<>();
                 if (metadata.hasLore())
                     combinedLore.addAll(metadata.getLore());
                 combinedLore.addAll(lore);
-                metadata.setLore((List<String>) combinedLore);
+                metadata.setLore(combinedLore);
             }
         }
         metadata.setUnbreakable(unbreakable);
         if (itemFlags != null && !itemFlags.isEmpty())
             metadata.addItemFlags(itemFlags.toArray(new ItemFlag[itemFlags.size()]));
-        if (enchantments != null && !enchantments.isEmpty()) {
-            enchantments.forEach((k, v) -> metadata.addEnchant(k, v.getLevel(), v.isLevelSafe()));
-        }
-        return item;
+        if (enchantments != null && !enchantments.isEmpty())
+            enchantments.forEach((k,v) -> metadata.addEnchant(k, v.getLevel(), v.isLevelSafe()));
     }
 }
