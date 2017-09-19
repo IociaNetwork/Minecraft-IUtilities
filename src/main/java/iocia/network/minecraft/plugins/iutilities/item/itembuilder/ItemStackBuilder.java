@@ -81,7 +81,7 @@ public class ItemStackBuilder extends BaseAbstractItemBuilder<ItemStackBuilder> 
         if (itemFlags != null)
             meta.addItemFlags(itemFlags.toArray(new ItemFlag[itemFlags.size()]));
         if (enchantments != null)
-            enchantments.forEach((e,d) -> meta.addEnchant(e, d.getLevel(), d.isLevelSafe()));
+            enchantments.forEach((e,d) -> meta.addEnchant(e, d.getLevel(), !d.isLevelSafe()));
         item.setItemMeta(meta);
         return item;
     }
