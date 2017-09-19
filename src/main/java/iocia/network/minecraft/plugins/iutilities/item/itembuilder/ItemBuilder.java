@@ -1,4 +1,4 @@
-package iocia.network.minecraft.plugins.iutilities.item.itembuilder.abstractions;
+package iocia.network.minecraft.plugins.iutilities.item.itembuilder;
 
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;

@@ -1,6 +1,5 @@
-package iocia.network.minecraft.plugins.iutilities.item.itembuilder.implementations;
+package iocia.network.minecraft.plugins.iutilities.item.itembuilder;
 
-import iocia.network.minecraft.plugins.iutilities.item.itembuilder.abstractions.BaseAbstractItemBuilder;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -14,7 +13,7 @@ public class ItemStackBuilder extends BaseAbstractItemBuilder<ItemStackBuilder> 
     
     /*---Constructors---*/
     /**
-     * Creates a new {@link iocia.network.minecraft.plugins.iutilities.item.itembuilder.abstractions.ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
+     * Creates a new {@link ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
      * @param material Material of the item.
      * @param amount Amount of the item.
      * @param damage Damage value of the item.
@@ -26,7 +25,7 @@ public class ItemStackBuilder extends BaseAbstractItemBuilder<ItemStackBuilder> 
     }
 
     /**
-     * Creates a new {@link iocia.network.minecraft.plugins.iutilities.item.itembuilder.abstractions.ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
+     * Creates a new {@link ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
      * @param material Material of the item.
      * @param amount Amount of the item.
      */
@@ -35,7 +34,7 @@ public class ItemStackBuilder extends BaseAbstractItemBuilder<ItemStackBuilder> 
     }
 
     /**
-     * Creates a new {@link iocia.network.minecraft.plugins.iutilities.item.itembuilder.abstractions.ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
+     * Creates a new {@link ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
      * @param material Material of the item.
      * @param damage Damage value of the item.
      */
@@ -44,7 +43,7 @@ public class ItemStackBuilder extends BaseAbstractItemBuilder<ItemStackBuilder> 
     }
 
     /**
-     * Creates a new {@link iocia.network.minecraft.plugins.iutilities.item.itembuilder.abstractions.ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
+     * Creates a new {@link ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
      * @param material Material of the item.
      */
     public ItemStackBuilder(Material material) {
@@ -52,7 +51,7 @@ public class ItemStackBuilder extends BaseAbstractItemBuilder<ItemStackBuilder> 
     }
 
     /**
-     * Creates a new {@link iocia.network.minecraft.plugins.iutilities.item.itembuilder.abstractions.ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
+     * Creates a new {@link ItemBuilder item builder} for regular {@linkplain ItemStack item stacks}.
      */
     public ItemStackBuilder() {
         this(Material.AIR, 1, (short) 0);
