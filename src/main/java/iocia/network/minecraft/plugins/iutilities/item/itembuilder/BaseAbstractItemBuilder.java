@@ -5,6 +5,11 @@ import org.bukkit.inventory.ItemFlag;
 
 import java.util.*;
 
+/**
+ * Responsible for methods allowing one to add build data which is universal across all items,
+ * not matter the type or form.
+ * @param <T>
+ */
 public abstract class BaseAbstractItemBuilder<T extends BaseAbstractItemBuilder<T>> implements ItemBuilder<T> {
     /*---Constants---*/
     private static final String ENCHANTMENT_NULL = "Given enchantment was null. Cannot add a null enchantment.";

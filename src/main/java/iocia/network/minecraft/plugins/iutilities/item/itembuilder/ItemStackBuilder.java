@@ -5,6 +5,9 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+/**
+ * Responsible for building normal, simple {@linkplain ItemStack item stacks}.
+ */
 public class ItemStackBuilder extends BaseAbstractItemBuilder<ItemStackBuilder> {
     /*---Data---*/
     private Material material;
