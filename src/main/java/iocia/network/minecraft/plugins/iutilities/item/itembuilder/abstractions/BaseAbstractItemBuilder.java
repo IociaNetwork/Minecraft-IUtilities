@@ -22,7 +22,7 @@ public abstract class BaseAbstractItemBuilder<T extends BaseAbstractItemBuilder<
     protected String displayName = null;
     protected String localizedName = null;
     protected Map<Enchantment, EnchantmentData> enchantments = null;
-    protected Collection<String> lore = null;
+    protected List<String> lore = null;
     protected Set<ItemFlag> itemFlags = null;
     
     /*---Constructors---*/
@@ -246,7 +246,7 @@ public abstract class BaseAbstractItemBuilder<T extends BaseAbstractItemBuilder<
     }
 
     /*---Internal Classes---*/
-    private class EnchantmentData {
+    protected class EnchantmentData {
         /*---Data---*/
         private int level;
         private boolean levelSafe;
